@@ -15,7 +15,12 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from vjezbe import views
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    url(r'^admin/$', admin.site.urls),
+    url(r'^vj01/$', views.vj01),
+    url(r'^filmovi/$', views.vj02Filmovi),
+    url(r'^film/([0-9]+)/$', views.vj02FilmId),
+    url(r'^film/$', views.vj02Film),
 ]

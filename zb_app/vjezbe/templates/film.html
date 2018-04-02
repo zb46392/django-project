@@ -1,0 +1,14 @@
+{% extends 'vj02Base.html' %}
+{% load static %}
+{% block content %}
+<h1>{{film.name}}</h1>
+<img src="{% static film.poster %}">
+<br>
+Godina: {{film.year}}
+<br>
+Redatelj: {{film.director}}
+<br>
+Žanr: {{film.genre}}
+<br>
+<br>
+{% endblock %}

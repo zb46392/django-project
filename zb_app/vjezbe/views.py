@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from random import randint
+from models import Author, Article
 
 # Create your views here.
 def vj01(request):
@@ -72,3 +73,7 @@ def vj02Film(request):
 def vj02FilmId(request, id):
     context = {'film': getFilmById(int(id))}
     return render(request, 'film.html', context)
+
+def vj03(request):
+    context = {'articles': Article.objects.filter(release_date__gte='2018-01-01')}
+    return render(request, 'vj03.html', context)

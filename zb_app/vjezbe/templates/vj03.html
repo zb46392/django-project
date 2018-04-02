@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vjezba 03</title>
+</head>
+<body>
+<header>Vjezba 03</header><br><br>
+<div>
+{% block content %}
+{% for article in articles %}
+{{article.release_date}} : {{article.author}}
+<br>
+{{article.title}}
+<br><br>
+{% endfor %}
+{% endblock %}
+</div>
+{% include 'vj02Footer.html' %}
+</body>
+</html>

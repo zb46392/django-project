@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^film/([0-9]+)/$', views.vj02FilmId),
     url(r'^film/$', views.vj02Film),
     url(r'^vj03/$', views.vj03),
+    url(r'^vj04/$', views.vj04),
 ]

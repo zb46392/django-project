@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from django.template import loader
 from random import randint
 from models import Author, Article
+from django.contrib.auth.forms import PasswordChangeForm
 
 # Create your views here.
 def vj01(request):
@@ -77,3 +78,11 @@ def vj02FilmId(request, id):
 def vj03(request):
     context = {'articles': Article.objects.filter(release_date__gte='2018-01-01')}
     return render(request, 'vj03.html', context)
+
+
+def vj04(request):
+    if (request.method == "POST"):
+        pass
+    else:
+        form = PasswordChangeForm(request.user)
+        return render(request, 'vj04.html', {'form': form})

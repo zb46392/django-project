@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Vjezba 04</title>
-</head>
-<body>
-<header>Login</header><br><br>
-<form method="POST">
-{% csrf_token %}
+	<head>
+		<title>Vjezba 04</title>
+	</head>
+	<body>
+		<header>Login</header><br><br>
+		<form method="POST">
+			{% csrf_token %}
 
-{{form.as_p}}
+			{{form.as_p}}
 
-<input type='hidden' name='next' value='{{next}}'/>
-<br>
-<button type='submit' name='login'>Login</button>
-</form>
-</body>
+			<input type='hidden' name='next' value='{{next}}'/>
+			<br>
+			<button type='submit' name='login'>Login</button>
+		</form>
+	</body>
 </html>

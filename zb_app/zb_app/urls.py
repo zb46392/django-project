@@ -15,7 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import (
+    LoginView,
+    LogoutView,
+    PasswordChangeView,
+    PasswordChangeDoneView)
 from vjezbe import views
 
 urlpatterns = [
@@ -26,6 +30,10 @@ urlpatterns = [
     url(r'^film/$', views.vj02Film),
     url(r'^vj03/$', views.vj03),
     url(r'^login/$', LoginView.as_view(template_name="login.html"), name="login"),
-    url(r'^logout/$',LogoutView.as_view(next_page='login'), name='logout'),
-    url(r'^vj04/$', views.vj04, name='vj04'),
+    url(r'^logout/$',LogoutView.as_view(next_page='chpass'), name='logout'),
+    url(r'^vj04/$', PasswordChangeView.as_view(
+        template_name="changePassword.html",
+        success_url='passwordChangeDone'), name='chpass'),
+    url(r'^vj04/passwordChangeDone/$', PasswordChangeDoneView.as_view(
+        template_name="changePasswordDone.html"), name='chpassdone'),
 ]

@@ -4,9 +4,11 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
 from random import randint
 from models import Author, Article
-from django.contrib.auth.forms import PasswordChangeForm
+
 
 # Create your views here.
 def vj01(request):
@@ -79,10 +81,11 @@ def vj03(request):
     context = {'articles': Article.objects.filter(release_date__gte='2018-01-01')}
     return render(request, 'vj03.html', context)
 
-
+@login_required
 def vj04(request):
     if (request.method == "POST"):
+        form = PasswordChangeForm(request.user, request.POST)
         pass
     else:
         form = PasswordChangeForm(request.user)
-        return render(request, 'vj04.html', {'form': form})
+        return render(request, 'changePassword.html', {'form': form})

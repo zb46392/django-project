@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vjezba 05</title>
+</head>
+<body>
+<header>Vjezba 05</header>
+<div>
+  <form method="POST">
+    {% csrf_token %}
+
+    {{form.as_p}}
+
+    <button type='submit' name='saveBook'>Pohrani</button>
+  </form>
+</div>
+</body>
+</html>

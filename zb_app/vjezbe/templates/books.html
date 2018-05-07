@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vjezba 05</title>
+</head>
+<body>
+<header>Vjezba 05</header>
+<div>
+  <table border="2">
+    <thead>
+      <th>
+        Naziv
+      </th>
+      <th>
+        Autor
+      </th>
+    </thead>
+    <tbody>
+      {% for knjiga in knjige %}
+      <tr>
+	      <td><a href="{% url 'chBookForm' knjiga.id %}">{{ knjiga.naziv }}</a></td>
+	      <td><a href="{% url 'chBookForm' knjiga.id %}">{{ knjiga.autor }}</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+   <a href="{% url 'bookForm' %}">Dodaj knjigu</a>
+</div>
+</body>
+</html>

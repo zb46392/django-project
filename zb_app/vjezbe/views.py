@@ -5,7 +5,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from random import randint
-from models import Author, Article
+from models import Author, Article, Knjiga
+from forms import BookForm
 
 
 # Create your views here.
@@ -78,3 +79,47 @@ def vj02FilmId(request, id):
 def vj03(request):
     context = {'articles': Article.objects.filter(release_date__gte='2018-01-01')}
     return render(request, 'vj03.html', context)
+
+def vj05(request):
+    context = {'knjige':Knjiga.objects.all()}
+    return render(request, 'books.html', context)
+
+
+def dodajKnjigu(request):
+    if request.method == 'POST':
+        form = BookForm(request.POST)
+
+        if form.is_valid():
+            knjiga = Knjiga.objects.create()
+            knjiga.naziv = form.cleaned_data['naziv']
+            knjiga.autor = form.cleaned_data['autor']
+
+            knjiga.save()
+
+    else:
+        form = BookForm()
+        context = {'form' : form}
+        return render(request, 'bookForm.html', context)
+
+    return vj05(request)
+
+def prominiKnjigu(request, id):
+    if request.method == 'POST':
+        form = BookForm(request.POST)
+
+        if form.is_valid():
+            knjiga = Knjiga.objects.get(pk=id)
+
+            knjiga.naziv = form.cleaned_data['naziv']
+            knjiga.autor = form.cleaned_data['autor']
+
+            knjiga.save()
+
+    else:
+        knjiga = Knjiga.objects.get(pk=id)
+        form = BookForm(initial={'naziv':knjiga.naziv, 'autor':knjiga.autor})
+
+        context = {'form':form}
+        return render(request, 'bookForm.html', context)
+
+    return vj05(request)

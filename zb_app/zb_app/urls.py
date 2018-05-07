@@ -36,4 +36,7 @@ urlpatterns = [
         success_url='passwordChangeDone'), name='chpass'),
     url(r'^vj04/passwordChangeDone/$', PasswordChangeDoneView.as_view(
         template_name="changePasswordDone.html"), name='chpassdone'),
+    url(r'^vj05/$', views.vj05),
+    url(r'^book/$', views.dodajKnjigu, name='bookForm'),
+    url(r'^book/([0-9]+)$', views.prominiKnjigu, name='chBookForm'),    
 ]

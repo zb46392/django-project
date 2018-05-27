@@ -7,6 +7,7 @@ from django.template import loader
 from random import randint
 from models import Author, Article, Knjiga
 from forms import BookForm
+from django.contrib.auth.decorators import user_passes_test
 
 
 # Create your views here.
@@ -81,11 +82,12 @@ def vj03(request):
     return render(request, 'vj03.html', context)
 
 def vj05(request):
-    context = {'knjige':Knjiga.objects.all()}
-    return render(request, 'books.html', context)
+    isSuperUser = request.user.is_superuser
+    isStaff = request.user.is_staff
+    context = {'knjige':Knjiga.objects.all(), 'isSuperUser': isSuperUser, 'isStaff': isStaff}
+    return render(request, 'books05.html', context)
 
-
-def dodajKnjigu(request):
+def dodajKnjigu05(request):
     if request.method == 'POST':
         form = BookForm(request.POST)
 
@@ -96,14 +98,14 @@ def dodajKnjigu(request):
 
             knjiga.save()
 
+        return vj05(request)
+
     else:
         form = BookForm()
         context = {'form' : form}
         return render(request, 'bookForm.html', context)
 
-    return vj05(request)
-
-def prominiKnjigu(request, id):
+def prominiKnjigu05(request, id):
     if request.method == 'POST':
         form = BookForm(request.POST)
 
@@ -115,6 +117,8 @@ def prominiKnjigu(request, id):
 
             knjiga.save()
 
+        return vj05(request)
+
     else:
         knjiga = Knjiga.objects.get(pk=id)
         form = BookForm(initial={'naziv':knjiga.naziv, 'autor':knjiga.autor})
@@ -122,4 +126,57 @@ def prominiKnjigu(request, id):
         context = {'form':form}
         return render(request, 'bookForm.html', context)
 
-    return vj05(request)
+
+def vj06(request):
+    isSuperUser = request.user.is_superuser
+    isStaff = request.user.is_staff
+    context = {'knjige':Knjiga.objects.all(), 'isSuperUser': isSuperUser, 'isStaff': isStaff}
+    return render(request, 'books06.html', context)
+
+def isSuperuser(user):
+    return user.is_superuser
+
+def isStaff(user):
+    return user.is_staff
+
+
+@user_passes_test(isSuperuser)
+def dodajKnjigu06(request):
+    if request.method == 'POST':
+        form = BookForm(request.POST)
+
+        if form.is_valid():
+            knjiga = Knjiga.objects.create()
+            knjiga.naziv = form.cleaned_data['naziv']
+            knjiga.autor = form.cleaned_data['autor']
+
+            knjiga.save()
+
+        return vj06(request)
+
+    else:
+        form = BookForm()
+        context = {'form' : form}
+        return render(request, 'bookForm.html', context)
+
+@user_passes_test(isStaff)
+def prominiKnjigu06(request, id):
+    if request.method == 'POST':
+        form = BookForm(request.POST)
+
+        if form.is_valid():
+            knjiga = Knjiga.objects.get(pk=id)
+
+            knjiga.naziv = form.cleaned_data['naziv']
+            knjiga.autor = form.cleaned_data['autor']
+
+            knjiga.save()
+
+        return vj06(request)
+
+    else:
+        knjiga = Knjiga.objects.get(pk=id)
+        form = BookForm(initial={'naziv':knjiga.naziv, 'autor':knjiga.autor})
+
+        context = {'form':form}
+        return render(request, 'bookForm.html', context)

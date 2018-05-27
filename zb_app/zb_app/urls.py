@@ -37,6 +37,11 @@ urlpatterns = [
     url(r'^vj04/passwordChangeDone/$', PasswordChangeDoneView.as_view(
         template_name="changePasswordDone.html"), name='chpassdone'),
     url(r'^vj05/$', views.vj05),
-    url(r'^book/$', views.dodajKnjigu, name='bookForm'),
-    url(r'^book/([0-9]+)$', views.prominiKnjigu, name='chBookForm'),    
+    url(r'^book05/$', views.dodajKnjigu05, name='bookForm05'),
+    url(r'^book05/([0-9]+)$', views.prominiKnjigu05, name='chBookForm05'),
+    url(r'^vj06/$', views.vj06),
+    url(r'^book06/$', views.dodajKnjigu05, name='bookForm06'),
+    url(r'^book06/([0-9]+)$', views.prominiKnjigu05, name='chBookForm06'),
+
+
 ]

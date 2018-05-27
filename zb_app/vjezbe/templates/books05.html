@@ -18,13 +18,13 @@
     <tbody>
       {% for knjiga in knjige %}
       <tr>
-	      <td><a href="{% url 'chBookForm' knjiga.id %}">{{ knjiga.naziv }}</a></td>
-	      <td><a href="{% url 'chBookForm' knjiga.id %}">{{ knjiga.autor }}</a></td>
+	      <td><a href="{% url 'chBookForm05' knjiga.id %}">{{ knjiga.naziv }}</a></td>
+	      <td><a href="{% url 'chBookForm05' knjiga.id %}">{{ knjiga.autor }}</a></td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
-   <a href="{% url 'bookForm' %}">Dodaj knjigu</a>
+   <a href="{% url 'bookForm05' %}">Dodaj knjigu</a>
 </div>
 </body>
 </html>

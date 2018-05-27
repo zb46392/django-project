@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vjezba 06</title>
+</head>
+<body>
+<header>Vjezba 06</header>
+<div>
+  <table border="2">
+    <thead>
+      <th>
+        Naziv
+      </th>
+      <th>
+        Autor
+      </th>
+    </thead>
+    <tbody>
+      {% for knjiga in knjige %}
+      <tr>
+	      <td>
+						{% if isStaff %}
+							<a href="{% url 'chBookForm06' knjiga.id %}">{{ knjiga.naziv }}</a>
+						{% else %}
+							{{ knjiga.naziv }}
+						{% endif %}
+				</td>
+	      <td>
+					{% if isStaff %}
+						<a href="{% url 'chBookForm06' knjiga.id %}">{{ knjiga.autor }}</a>
+					{% else %}
+						{{ knjiga.autor }}
+					{% endif %}
+				</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+	{% if isSuperUser %}
+   <a href="{% url 'bookForm06' %}">Dodaj knjigu</a>
+ 	{% endif %}
+</div>
+</body>
+</html>

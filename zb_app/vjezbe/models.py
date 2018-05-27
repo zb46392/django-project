@@ -23,3 +23,8 @@ class Article(models.Model):
 class Knjiga(models.Model):
     naziv = models.CharField(max_length = 40)
     autor = models.CharField(max_length = 40)
+
+    class Meta:
+        permissions = (
+            ("mozeMjenjat", "moze mjenjat podatke o knjizi"),
+            ("mozeDodat", "moze dodatvati knjige"), )

@@ -82,9 +82,7 @@ def vj03(request):
     return render(request, 'vj03.html', context)
 
 def vj05(request):
-    isSuperUser = request.user.is_superuser
-    isStaff = request.user.is_staff
-    context = {'knjige':Knjiga.objects.all(), 'isSuperUser': isSuperUser, 'isStaff': isStaff}
+    context = {'knjige':Knjiga.objects.all()}
     return render(request, 'books05.html', context)
 
 def dodajKnjigu05(request):
@@ -180,3 +178,56 @@ def prominiKnjigu06(request, id):
 
         context = {'form':form}
         return render(request, 'bookForm.html', context)
+
+
+def vj07(request):
+    mozeMjenjat = request.user.has_perm('vjezbe.mozeMjenjat')
+    mozeDodat = request.user.has_perm('vjezbe.mozeDodat')
+    context = {'knjige':Knjiga.objects.all(), 'mozeMjenjat': mozeMjenjat, 'mozeDodat': mozeDodat}
+    return render(request, 'books07.html', context)
+
+def dodajKnjigu07(request):
+    if request.user.has_perm('vjezbe.mozeDodat'):
+        if request.method == 'POST':
+            form = BookForm(request.POST)
+
+            if form.is_valid():
+                knjiga = Knjiga.objects.create()
+                knjiga.naziv = form.cleaned_data['naziv']
+                knjiga.autor = form.cleaned_data['autor']
+
+                knjiga.save()
+
+            return vj07(request)
+
+        else:
+            form = BookForm()
+            context = {'form' : form}
+            return render(request, 'bookForm.html', context)
+
+    return vj07(request)
+
+
+def prominiKnjigu07(request, id):
+    if request.user.has_perm('vjezbe.mozeMjenjat'):
+        if request.method == 'POST':
+            form = BookForm(request.POST)
+
+            if form.is_valid():
+                knjiga = Knjiga.objects.get(pk=id)
+
+                knjiga.naziv = form.cleaned_data['naziv']
+                knjiga.autor = form.cleaned_data['autor']
+
+                knjiga.save()
+
+            return vj07(request)
+
+        else:
+            knjiga = Knjiga.objects.get(pk=id)
+            form = BookForm(initial={'naziv':knjiga.naziv, 'autor':knjiga.autor})
+
+            context = {'form':form}
+            return render(request, 'bookForm.html', context)
+
+    return vj07(request)

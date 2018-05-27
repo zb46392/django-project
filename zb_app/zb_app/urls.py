@@ -40,8 +40,11 @@ urlpatterns = [
     url(r'^book05/$', views.dodajKnjigu05, name='bookForm05'),
     url(r'^book05/([0-9]+)$', views.prominiKnjigu05, name='chBookForm05'),
     url(r'^vj06/$', views.vj06),
-    url(r'^book06/$', views.dodajKnjigu05, name='bookForm06'),
-    url(r'^book06/([0-9]+)$', views.prominiKnjigu05, name='chBookForm06'),
+    url(r'^book06/$', views.dodajKnjigu06, name='bookForm06'),
+    url(r'^book06/([0-9]+)$', views.prominiKnjigu06, name='chBookForm06'),
+    url(r'^vj07/$', views.vj07),
+    url(r'^book07/$', views.dodajKnjigu07, name='bookForm07'),
+    url(r'^book07/([0-9]+)$', views.prominiKnjigu07, name='chBookForm07'),
 
 
 ]

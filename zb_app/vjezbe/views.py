@@ -6,7 +6,8 @@ from django.http import HttpResponse
 from django.template import loader
 from random import randint
 from models import Author, Article, Knjiga
-from forms import BookForm
+from forms import BookForm, BmiForm
+from .bmi import bmi_calc, BmiManager
 from django.contrib.auth.decorators import user_passes_test
 
 
@@ -231,3 +232,21 @@ def prominiKnjigu07(request, id):
             return render(request, 'bookForm.html', context)
 
     return vj07(request)
+
+
+def bmi(request):
+	if request.method == 'GET':
+		form = BmiForm()
+	elif request.method == 'POST':
+		form = BmiForm(request.POST)
+		if form.is_valid(): # ukliko je forma validna napraviti cem se izracun
+			weigth = form.cleaned_data.get('weigth')
+			heigth = form.cleaned_data.get('heigth')
+
+			bmi_manager = BmiManager(weigth, heigth)
+			bm_index =  bmi_manager.calculate()
+
+			return render(request, 'success.html', {'bmi': bm_index})
+
+
+	return render(request, 'bmi.html',{'form': form})

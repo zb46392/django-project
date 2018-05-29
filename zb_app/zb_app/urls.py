@@ -45,6 +45,6 @@ urlpatterns = [
     url(r'^vj07/$', views.vj07),
     url(r'^book07/$', views.dodajKnjigu07, name='bookForm07'),
     url(r'^book07/([0-9]+)$', views.prominiKnjigu07, name='chBookForm07'),
-
+    url(r'^vj08/$', views.bmi, name='bmi'),
 
 ]

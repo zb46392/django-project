@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<form action="{% url 'bmi' %}" method="POST">
+	{{form.as_p}}
+	{% csrf_token %}
+	<input type="submit" name="submit">
+</form>
+</body>
+</html>

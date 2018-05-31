@@ -9,6 +9,11 @@ from models import Author, Article, Knjiga
 from forms import BookForm, BmiForm
 from .bmi import bmi_calc, BmiManager
 from django.contrib.auth.decorators import user_passes_test
+from django.views.generic import View
+import requests
+import json
+from django.template.loader import render_to_string
+from django.http import JsonResponse
 
 
 # Create your views here.
@@ -250,3 +255,44 @@ def bmi(request):
 
 
 	return render(request, 'bmi.html',{'form': form})
+
+
+
+class vj09view01(View):
+    def get(self, request):
+        r = requests.get("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22split%2C%20hr%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys")
+        if r.status_code == 200:
+            weather_object = json.loads(r.content)
+            return render(request, 'weather.html',{'data': weather_object['query']['results']['channel']})
+            #return render_to_string('weather.html', {'data': weather_object['query']['results']['channel']['item']['description']})
+            #return JsonResponse({'data': weather_object})
+        else:
+            return HttpResponse("No service!!!Try later!!!")
+
+
+class vj09view02(View):
+    template_name = 'weather02.html'
+    def get(self, request):
+        return render(request, 'weather02.html')
+    def post(self, request):
+        r = requests.get("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22split%2C%20hr%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys")
+        data = None
+        if r.status_code == 200:
+            weather_object = json.loads(r.content)
+            data = {
+            'imageUrl': weather_object['query']['results']['channel']['image']['url'],
+            'title': weather_object['query']['results']['channel']['item']['title'],
+            'forecast': weather_object['query']['results']['channel']['item']['forecast']
+            }
+        else:
+            data = {'msg': 'No service!!!Try later!!!'}
+
+        return JsonResponse({'yapi': data})
+
+
+class Ajax(View):
+    template_name = 'ajax.html'
+
+    def get(self, request):
+        template = render_to_string(self.template_name)
+        return JsonResponse({'template': template})

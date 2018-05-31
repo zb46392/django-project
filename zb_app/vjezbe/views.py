@@ -244,7 +244,7 @@ def bmi(request):
 		form = BmiForm()
 	elif request.method == 'POST':
 		form = BmiForm(request.POST)
-		if form.is_valid(): # ukliko je forma validna napraviti cem se izracun
+		if form.is_valid():
 			weigth = form.cleaned_data.get('weigth')
 			heigth = form.cleaned_data.get('heigth')
 
@@ -264,8 +264,6 @@ class vj09view01(View):
         if r.status_code == 200:
             weather_object = json.loads(r.content)
             return render(request, 'weather.html',{'data': weather_object['query']['results']['channel']})
-            #return render_to_string('weather.html', {'data': weather_object['query']['results']['channel']['item']['description']})
-            #return JsonResponse({'data': weather_object})
         else:
             return HttpResponse("No service!!!Try later!!!")
 
@@ -290,9 +288,15 @@ class vj09view02(View):
         return JsonResponse({'yapi': data})
 
 
-class Ajax(View):
-    template_name = 'ajax.html'
-
+class vj10(View):
+    template_name = 'welcome.html'
     def get(self, request):
-        template = render_to_string(self.template_name)
-        return JsonResponse({'template': template})
+        if request.is_ajax():
+            template = render_to_string('ajax.html')
+            stan = {
+            'age': '10',
+            'height': '1.65 m',
+            'birthplace': 'South Park'
+            }
+            return JsonResponse({'template': template, 'stan': stan})
+        return render(request, self.template_name)

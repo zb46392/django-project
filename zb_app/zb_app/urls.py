@@ -48,4 +48,5 @@ urlpatterns = [
     url(r'^vj08/$', views.bmi, name='bmi'),
     url(r'^vj09a/$', views.vj09view01.as_view(), name='vj09a'),
     url(r'^vj09b/$', views.vj09view02.as_view(), name='vj09b'),
+    url(r'^vj10/$', views.vj10.as_view(), name='vj10'),
 ]

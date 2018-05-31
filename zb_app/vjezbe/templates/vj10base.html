@@ -1,15 +1,17 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Vjezba 10</title>
-  <link rel="stylesheet" href=""/><!--BOOTSTRAP-->
-  <script type="text/javascript" src=""></script><!--jQuery-->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+	{% block head %}
+	{% endblock %}
+	<title>Hello!!!</title>
 </head>
 <body>
-<header>Vjezna10</header>
-<div>
-{% block content%}
+
+{% block content %}
 {% endblock %}
-</div>
+
 </body>
 </html>

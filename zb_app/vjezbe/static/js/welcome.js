@@ -1,36 +1,38 @@
 $(document).ready(function(){
   setTimeout(function(){
     $.ajax({
-      url:"/ajax",
+      url:"/vj10",
       type: "GET",
       success: function(data){
-        $("#html_string").html(data.template)
+        var button = $("<button>").append("Click ME!");
+        $("#html_string").html(data.template);
+        $("#html_string").append(button);
 
-        $.ajax({
-          url:"/vj10ajax01",
-          type: "GET",
-          success: function(data){
-            button = null;// get button froma data
+        button.bind({
+          click: function(){
+            $.ajax({
+              url: "/vj10",
+              type: "GET",
+              success: function(data){
+                var age = "Age: " + data.stan.age;
+                var height = "Height: " + data.stan.height;
+                var birthplace = "Birthplace: " + data.stan.birthplace;
 
-            button.bind({
-              click: function(){
-                $.ajax({
-                  url: "/vj10ajax02",
-                  type: "GET",
-                  success: function(data){
-                    // ispis podataka (dob, visina, mjesto rodjenja)
-                  },
-                  error: function(xhr, errmessage, err){
-                    console.log(errmessage);
-                  }
-                });
+                $("#html_string").append($("<br>"));
+                $("#html_string").append($("<p>").append(age));
+                $("#html_string").append($("<br>"));
+                $("#html_string").append($("<p>").append(height));
+                $("#html_string").append($("<br>"));
+                $("#html_string").append($("<p>").append(birthplace));
+                $("#html_string").append($("<br>"));
+              },
+              error: function(xhr, errmessage, err){
+                console.log(errmessage);
               }
             });
-          },
-          error: function(xhr, errmessage, err){
-            console.log(errmessage);
           }
         });
+
       },
       error: function(xhr, errmessage, err){
         console.log(errmessage);

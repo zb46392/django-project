@@ -22,7 +22,7 @@ ipython==2.3.0
 jedi==0.8.1-final0
 joblib==0.8.3
 logilab-common==0.62.0
-lxml==3.4.0
+lxml==4.6.2
 matplotlib==1.4.2
 mercurial==3.1.2
 mock==1.0.1

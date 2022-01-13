@@ -2,7 +2,7 @@ CDDB==1.4
 Django==1.11
 Jinja2==2.7.3
 MarkupSafe==0.23
-Pillow==2.6.1
+Pillow==9.0.0
 Pygments==2.0.1
 SOAPpy==0.12.22
 Sphinx==1.2.3
